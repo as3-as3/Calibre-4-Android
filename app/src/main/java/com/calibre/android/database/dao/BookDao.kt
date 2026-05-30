@@ -23,7 +23,7 @@ interface BookDao {
     suspend fun deleteById(bookId: String): Int
     
     @Query("SELECT * FROM books WHERE id = :bookId")
-    suspend fun getById(bookId: String): BookEntity?
+    fun getById(bookId: String): Flow<BookEntity?>
     
     @Query("SELECT * FROM books ORDER BY title ASC")
     fun getAllBooks(): Flow<List<BookEntity>>
@@ -31,7 +31,7 @@ interface BookDao {
     @Query("SELECT * FROM books WHERE isFavorite = 1 ORDER BY title ASC")
     fun getFavorites(): Flow<List<BookEntity>>
     
-    @Query("SELECT * FROM books WHERE isArchived = 0 ORDER BY addedDate DESC")
+    @Query("SELECT * FROM books WHERE isArchived = 0 ORDER BY addedDate DESC LIMIT :limit")
     fun getRecentBooks(limit: Int = 20): Flow<List<BookEntity>>
     
     @Query("""

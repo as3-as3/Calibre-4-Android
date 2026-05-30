@@ -24,7 +24,7 @@ import com.calibre.android.database.converter.ListConverters
         SettingEntity::class
     ],
     version = 1,
-    exportSchema = true
+    exportSchema = false
 )
 @TypeConverters(DateTimeConverters::class, ListConverters::class)
 abstract class CalibreDatabase : RoomDatabase() {

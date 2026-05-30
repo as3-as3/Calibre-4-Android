@@ -6,6 +6,7 @@ import com.calibre.android.database.entity.BookEntity
 import com.calibre.android.format.FormatHandlerRegistry
 import com.calibre.android.model.Book
 import com.calibre.android.model.Collection
+import com.calibre.android.model.toEntity
 import com.calibre.android.model.toModel
 import com.calibre.android.repository.IBookRepository
 import com.calibre.android.util.FileScanner

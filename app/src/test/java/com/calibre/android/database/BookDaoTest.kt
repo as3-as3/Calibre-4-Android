@@ -48,7 +48,7 @@ class BookDaoTest {
         )
         
         bookDao.insert(book)
-        val retrieved = bookDao.getById(book.id)
+        val retrieved = bookDao.getById(book.id).first()
         
         assert(retrieved?.title == "Test Book")
         assert(retrieved?.author == "Test Author")

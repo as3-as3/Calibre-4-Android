@@ -2,9 +2,9 @@ package com.calibre.android.service.metadata
 
 import com.calibre.android.database.dao.BookDao
 import com.calibre.android.database.dao.MetadataDao
-import com.calibre.android.database.entity.MetadataEntity
 import com.calibre.android.service.viewer.BookMetadata
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -28,7 +28,7 @@ class MetadataService @Inject constructor(
     }
 
     override suspend fun updateMetadata(bookId: String, metadata: BookMetadata) {
-        val book = bookDao.getById(bookId)
+        val book = bookDao.getById(bookId).firstOrNull()
         book?.let {
             val updated = it.copy(
                 title = metadata.title,

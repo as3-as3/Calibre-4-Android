@@ -3,7 +3,7 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
     id("com.google.protobuf")
 }
@@ -71,8 +71,17 @@ android {
     }
     
     // Kotlin setup
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    
+    kotlin {
+        jvmToolchain(17)
+    }
+    
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
         freeCompilerArgs += listOf(
             "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
             "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi"
@@ -97,6 +106,7 @@ dependencies {
     // Core Android
     implementation("androidx.core:core:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     
     // Jetpack Compose
@@ -116,17 +126,17 @@ dependencies {
     // Database (Room)
     implementation("androidx.room:room-runtime:2.6.0")
     implementation("androidx.room:room-ktx:2.6.0")
-    kapt("androidx.room:room-compiler:2.6.0")
+    ksp("androidx.room:room-compiler:2.6.0")
     
     // DataStore (Preferences)
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     
     // Dependency Injection (Hilt)
     implementation("com.google.dagger:hilt-android:2.48")
-    kapt("com.google.dagger:hilt-compiler:2.48")
+    ksp("com.google.dagger:hilt-compiler:2.48")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
     implementation("androidx.hilt:hilt-work:1.1.0")
-    kapt("androidx.hilt:hilt-compiler:1.1.0")
+    ksp("androidx.hilt:hilt-compiler:1.1.0")
     
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
@@ -144,10 +154,10 @@ dependencies {
     implementation("androidx.work:work-multiprocess:2.9.0")
     
     // Format Handlers
-    implementation("com.github.psiegman:epublib:4.0") {
-        exclude(group = "org.slf4j")
-        exclude(group = "xmlpull")
-    }
+    // implementation("com.github.psiegman:epublib:3.1") {
+    //    exclude(group = "org.slf4j")
+    //    exclude(group = "xmlpull")
+    // }
     implementation("com.itextpdf:itext7-core:7.2.4")  // PDF
     
     // Image Loading
@@ -158,9 +168,12 @@ dependencies {
     
     // Testing
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")
-    testImplementation("org.mockito:mockito-core:5.5.1")
-    testImplementation("kotlinx.coroutines:kotlinx-coroutines-test:1.7.3")
+    testImplementation("androidx.test:core-ktx:1.5.0")
+    testImplementation("androidx.test.ext:junit-ktx:1.1.5")
+    testImplementation("org.robolectric:robolectric:4.11.1")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
+    testImplementation("org.mockito:mockito-core:5.7.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -169,6 +182,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.4")
 }
 
+/*
 // Kapt configuration for annotation processing
 kapt {
     correctErrorTypes = true
@@ -176,7 +190,9 @@ kapt {
         arg("dagger.hilt.android.internal.disableAndroidSuperclassValidation", "true")
     }
 }
+*/
 
+/*
 // Protobuf configuration (for DataStore if needed)
 protobuf {
     protoc {
@@ -192,3 +208,4 @@ protobuf {
         }
     }
 }
+*/

@@ -30,15 +30,21 @@ class BookRepository @Inject constructor(
     override fun searchBooks(query: String): Flow<List<BookEntity>> = 
         bookDao.searchBooks(query)
     
-    override suspend fun addBook(book: BookEntity) = withContext(Dispatchers.IO) {
-        bookDao.insert(book)
+    override suspend fun addBook(book: BookEntity) {
+        withContext(Dispatchers.IO) {
+            bookDao.insert(book)
+        }
     }
     
-    override suspend fun updateBook(book: BookEntity) = withContext(Dispatchers.IO) {
-        bookDao.update(book)
+    override suspend fun updateBook(book: BookEntity) {
+        withContext(Dispatchers.IO) {
+            bookDao.update(book)
+        }
     }
     
-    override suspend fun deleteBook(id: String) = withContext(Dispatchers.IO) {
-        bookDao.deleteById(id)
+    override suspend fun deleteBook(id: String) {
+        withContext(Dispatchers.IO) {
+            bookDao.deleteById(id)
+        }
     }
 }
